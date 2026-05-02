@@ -1,0 +1,11 @@
+campaign_id,campaign_name,channel,country,start_date,status
+CMP001,Google BR Acquisition 01,google,BR,2026-04-01,active
+CMP002,Meta US Acquisition 02,meta,US,2026-04-01,active
+CMP003,Native PT Acquisition 03,native,PT,2026-04-01,active
+CMP004,Google BR Acquisition 04,google,BR,2026-04-01,paused
+CMP005,Meta US Acquisition 05,meta,US,2026-04-01,active
+CMP006,Native PT Acquisition 06,native,PT,2026-04-01,active
+CMP007,Google BR Acquisition 07,google,BR,2026-04-01,active
+CMP008,Meta US Acquisition 08,meta,US,2026-04-01,active
+CMP009,Native PT Acquisition 09,native,PT,2026-04-01,paused
+CMP010,Google BR Acquisition 10,google,BR,2026-04-01,active

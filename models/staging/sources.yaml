@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: raw
+    database: MARKETING_DB
+    schema: RAW
+
+    tables:
+      - name: raw_ads_campaigns
+        identifier: RAW_ADS_CAMPAIGNS
+
+      - name: raw_ads_costs
+        identifier: RAW_ADS_COSTS
+
+      - name: raw_site_revenue
+        identifier: RAW_SITE_REVENUE

@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_ads_campaigns
+    columns:
+      - name: campaign_id
+        tests: [not_null]
+
+  - name: stg_ads_costs
+    columns:
+      - name: campaign_id
+        tests: [not_null]
+
+  - name: stg_site_revenue
+    columns:
+      - name: campaign_id
+        tests: [not_null]

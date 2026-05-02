@@ -1,0 +1,27 @@
+
+-- Snowflake SQL script to copy data from S3 stage to RAW_ADS_CAMPAIGNS table
+
+COPY INTO RAW_ADS_CAMPAIGNS
+FROM @S3_MARKETING_STAGE/ads_campaigns/
+FILE_FORMAT = CSV_FORMAT
+ON_ERROR = 'ABORT_STATEMENT';
+
+-- Snowflake SQL script to copy data from S3 stage to RAW_ADS_COSTS table
+
+COPY INTO RAW_ADS_COSTS
+FROM @S3_MARKETING_STAGE/ads_costs/
+FILE_FORMAT = CSV_FORMAT
+ON_ERROR = 'ABORT_STATEMENT';
+
+-- Snowflake SQL script to copy data from S3 stage to RAW_SITE_REVENUE table
+
+COPY INTO RAW_SITE_REVENUE
+FROM @S3_MARKETING_STAGE/site_revenue/
+FILE_FORMAT = CSV_FORMAT
+ON_ERROR = 'ABORT_STATEMENT';
+
+-- Verify the number of records loaded into each table
+
+SELECT COUNT(*) FROM RAW_ADS_CAMPAIGNS;
+SELECT COUNT(*) FROM RAW_ADS_COSTS;
+SELECT COUNT(*) FROM RAW_SITE_REVENUE;
