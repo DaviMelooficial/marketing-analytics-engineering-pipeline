@@ -1,27 +1,89 @@
-SELECT
-    date,
-    campaign_id,
-    campaign_name,
-    channel,
-    country,
+WITH base AS (
 
-    impressions,
-    clicks,
-    cost,
-    sessions,
-    pageviews,
-    revenue,
+    SELECT
+        date,
+        campaign_id,
+        campaign_name,
+        channel,
+        country,
 
-    (revenue - cost) AS profit,
+        impressions,
+        clicks,
+        cost,
+        sessions,
+        pageviews,
+        revenue
 
-    CASE WHEN impressions > 0 THEN clicks / impressions ELSE 0 END AS ctr,
+    FROM {{ ref('int_campaign_daily_performance') }}
 
-    CASE WHEN clicks > 0 THEN cost / clicks ELSE 0 END AS cpc,
+),
 
-    CASE WHEN cost > 0 THEN revenue / cost ELSE 0 END AS roas,
+final AS (
 
-    CASE WHEN sessions > 0 THEN revenue / sessions * 1000 ELSE 0 END AS rpm,
+    SELECT
+        date,
+        campaign_id,
+        campaign_name,
+        channel,
+        country,
 
-    CASE WHEN sessions > 0 THEN pageviews / sessions ELSE 0 END AS pages_per_session
+        impressions,
+        clicks,
+        ROUND(cost, 2) AS cost,
+        sessions,
+        pageviews,
+        ROUND(revenue, 2) AS revenue,
 
-FROM {{ ref('int_campaign_daily_performance') }}
+        ROUND(revenue - cost, 2) AS profit,
+
+        ROUND(
+            CASE 
+                WHEN impressions > 0 
+                    THEN clicks::FLOAT / impressions 
+                ELSE 0 
+            END,
+            4
+        ) AS ctr,
+
+        ROUND(
+            CASE 
+                WHEN clicks > 0 
+                    THEN cost / clicks 
+                ELSE 0 
+            END,
+            2
+        ) AS cpc,
+
+        ROUND(
+            CASE 
+                WHEN cost > 0 
+                    THEN revenue / cost 
+                ELSE 0 
+            END,
+            2
+        ) AS roas,
+
+        ROUND(
+            CASE 
+                WHEN sessions > 0 
+                    THEN (revenue / sessions) * 1000 
+                ELSE 0 
+            END,
+            2
+        ) AS rpm,
+
+        ROUND(
+            CASE 
+                WHEN sessions > 0 
+                    THEN pageviews::FLOAT / sessions 
+                ELSE 0 
+            END,
+            2
+        ) AS pages_per_session
+
+    FROM base
+
+)
+
+SELECT *
+FROM final
